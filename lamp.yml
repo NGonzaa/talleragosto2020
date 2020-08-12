@@ -31,7 +31,7 @@
       path: /etc/httpd/conf/httpd.conf
       line: IncludeOptional vhost.d/*.conf
 
-  - name: Crear directorio de contenido de cirtualhost
+  - name: Crear directorio de contenido de virtualhost
     file:
       path: "{{ item }}"
       recurse: yes
