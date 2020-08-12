@@ -5,7 +5,6 @@
   become_method: sudo
   vars:
     packages:
-      - httpd
       - php
       - mariadb-server
       - mariadb
@@ -13,44 +12,17 @@
     server: www.ejemplo.com.uy
     hostmaster: admin@ejemplo.com.uy
 
+  roles:
+  - role: apache-centos
+    when: ansible_facts['os_family']=='CentOS'
+  - role: apache-ubuntu
+    when: ansible_facts['os_family']=='Ubuntu'
+
   tasks:
   - name: Instalar software LAMP
     yum:
       name: "{{ packages }}"
       state: latest
-
-  - name: Crear directorio de configuracion de virtualhost
-    file:
-      path: /etc/httpd/vhost.d
-      state: directory
-      mode: '0755'
-      owner: root
-
-  - name: Agregar directorio de configuracion de virtualhost a httpd.conf
-    lineinfile:
-      path: /etc/httpd/conf/httpd.conf
-      line: IncludeOptional vhost.d/*.conf
-
-  - name: Crear directorio de contenido de virtualhost
-    file:
-      path: "{{ item }}"
-      recurse: yes
-      state: directory
-      owner: apache
-      group: apache
-      mode: '0755'
-    loop:
-      - /var/www/{{ sitio }}
-      - /var/www/{{ sitio }}/html
-      - /var/www/{{ sitio }}/cgi-bin
-
-  - name: Crear configuracion de virtualhost
-    template:
-      src: templates/{{ sitio }}.j2
-      dest: /etc/httpd/vhost.d/{{ sitio }}.conf
-      owner: root
-      mode: '0644'
-    notify: Reiniciar httpd
 
   - name: Iniciar y habilitar servicios
     service:
@@ -58,22 +30,12 @@
       state: started
       enabled: yes
     loop:
-      - httpd
       - mariadb-server
 
   - name: Configurar reglas de firewall
     firewalld:
-      service: "{{ item }}"
+      service: mysql
       state: enabled
       permanent: yes
       immediate: yes
-    loop:
-      - http
-      - mysql
 
-  handlers:
-    - name: Reiniciar httpd
-      service:
-        name: httpd
-        state: restarted
-        enabled: yes
