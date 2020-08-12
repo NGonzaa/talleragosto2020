@@ -46,7 +46,10 @@
 
   - name: Configurar reglas de firewall.
     firewalld:
-      service: http
+      service: "{{ item }}"
       state: enabled
       permanent: yes
       immediate: yes
+    loop:
+      - http
+      - https
