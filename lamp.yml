@@ -15,8 +15,6 @@
   roles:
   - role: apache-centos
     when: ansible_facts['os_family']=='CentOS'
-  - role: apache-ubuntu
-    when: ansible_facts['os_family']=='Ubuntu'
 
   tasks:
   - name: Instalar software LAMP
