@@ -1,6 +1,6 @@
 ---
 # handlers file for roles/apache-debian
-- name: Reiniciar el servicio Apache (apache2).
+- name: Reiniciar apache2
   service:
     name: apache2
     state: restarted
