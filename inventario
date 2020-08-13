@@ -1,5 +1,5 @@
 [redhat]
-centos02 ansible_host=192.168.56.104
+apachesrv ansible_host=192.168.56.104
 
 [debian]
 ubuntu1 ansible_host=192.168.56.105
