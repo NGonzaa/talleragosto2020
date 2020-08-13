@@ -1,7 +1,7 @@
 ---
-# handlers file for roles/apache-ubuntu
-- name: Reiniciar el servicio Apache ().
+# handlers file for roles/apache-debian
+- name: Reiniciar el servicio Apache (apache2).
   service:
-    name: 
+    name: apache2
     state: restarted
     enabled: yes
