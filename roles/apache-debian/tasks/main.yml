@@ -1,34 +1,34 @@
 ---
 # tasks file for roles/apache-ubuntu
-  - name: Instalar Apache Server.
-    apt:
-      name: apache2
-      state: latest
+- name: Instalar Apache Server.
+  apt:
+    name: apache2
+    state: latest
 
-  - name: Crear directorio de configuracion de virtualhost.
-    file:
-      path: /etc/httpd/vhost.d
-      state: directory
-      mode: '0755'
-      owner: root
+- name: Crear directorio de configuracion de virtualhost.
+  file:
+    path: /etc/httpd/vhost.d
+    state: directory
+    mode: '0755'
+    owner: root
 
-  - name: Agregar directorio de configuracion de virtualhost a httpd.conf.
-    lineinfile:
-      path: /etc/httpd/conf/httpd.conf
-      line: IncludeOptional vhost.d/*.conf
+- name: Agregar directorio de configuracion de virtualhost a httpd.conf.
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: IncludeOptional vhost.d/*.conf
 
-  - name: Iniciar y habilitar servicio Apache (httpd).
-    service:
-      name: httpd
-      state: started
-      enabled: yes
+- name: Iniciar y habilitar servicio Apache (httpd).
+  service:
+    name: httpd
+    state: started
+    enabled: yes
 
-  - name: Configurar reglas de firewall.
-    ufw:
-      service: "{{ item }}"
-      state: enabled
-      permanent: yes
-      immediate: yes
-    loop:
-      - http
-      - https
+- name: Configurar reglas de firewall.
+  ufw:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop:
+    - http
+    - https
