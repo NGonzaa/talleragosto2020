@@ -13,7 +13,7 @@
     when: ansible_facts['os_family'] == "Debian"
 
   tasks:
-  - name: Crear configuracion de balanceo de cargas.
+  - name: Crear configuracion de balanceo de cargas en RedHat.
     template:
       src: templates/loadbalancer.j2
       dest: /etc/httpd/vhost.d/loadbalancer.conf
@@ -22,8 +22,7 @@
     when: ansible_facts['os_family'] == "RedHat"
     notify: Reiniciar httpd
 
-  tasks:
-  - name: Crear configuracion de balanceo de cargas.
+  - name: Crear configuracion de balanceo de cargas en Debian.
     template:
       src: templates/loadbalancer.j2
       dest: /etc/apache2/sites-enabled/loadbalancer.conf
@@ -31,4 +30,3 @@
       mode: '0644'
     when: ansible_facts['os_family'] == "Debian"
     notify: Reiniciar apache2
-    
