@@ -21,3 +21,14 @@
       mode: '0644'
     when: ansible_facts['os_family'] == "RedHat"
     notify: Reiniciar httpd
+
+  tasks:
+  - name: Crear configuracion de balanceo de cargas.
+    template:
+      src: templates/loadbalancer.j2
+      dest: /etc/apache2/sites-enabled/loadbalancer.conf
+      owner: root
+      mode: '0644'
+    when: ansible_facts['os_family'] == "Debian"
+    notify: Reiniciar apache2
+    
