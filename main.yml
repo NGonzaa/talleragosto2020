@@ -3,10 +3,8 @@
   remote_user: ansible
   become: yes
   become_method: sudo
-  vars:
-    sitio: ejemplo
-    server: www.ejemplo.com.uy
-    hostmaster: admin@ejemplo.com.uy
+  vars_files:
+  - ./loadbalancer_vars.yml
 
   roles:
   - role: apache-centos
@@ -14,6 +12,7 @@
   - role: apache-debian
     when: ansible_facts['os_family'] == "Debian"
 
+  tasks:
   - name: Crear configuracion de balanceo de cargas.
     template:
       src: templates/loadbalancer.j2
