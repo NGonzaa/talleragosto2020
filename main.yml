@@ -14,19 +14,6 @@
   - role: apache-debian
     when: ansible_facts['os_family'] == "Debian"
 
-  - name: Crear directorio de contenido de virtualhost.
-    file:
-      path: "{{ item }}"
-      recurse: yes
-      state: directory
-      owner: apache
-      group: apache
-      mode: '0755'
-    loop:
-      - /var/www/{{ sitio }}
-      - /var/www/{{ sitio }}/html
-      - /var/www/{{ sitio }}/cgi-bin
-
   - name: Crear configuracion de virtualhost.
     template:
       src: templates/{{ sitio }}.j2
