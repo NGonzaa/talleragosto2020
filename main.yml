@@ -18,24 +18,23 @@
   - role: apache-debian
     when: ansible_facts['os_family'] == "Debian"
 
-  tasks:
-  - name: Instalar software LAMP
-    yum:
-      name: "{{ packages }}"
-      state: latest
-
-  - name: Iniciar y habilitar servicios
-    service:
-      name: "{{ item }}"
-      state: started
-      enabled: yes
+  - name: Crear directorio de contenido de virtualhost.
+    file:
+      path: "{{ item }}"
+      recurse: yes
+      state: directory
+      owner: apache
+      group: apache
+      mode: '0755'
     loop:
-      - mariadb-server
+      - /var/www/{{ sitio }}
+      - /var/www/{{ sitio }}/html
+      - /var/www/{{ sitio }}/cgi-bin
 
-  - name: Configurar reglas de firewall
-    firewalld:
-      service: mysql
-      state: enabled
-      permanent: yes
-      immediate: yes
-
+  - name: Crear configuracion de virtualhost.
+    template:
+      src: templates/{{ sitio }}.j2
+      dest: /etc/httpd/vhost.d/{{ sitio }}.conf
+      owner: root
+      mode: '0644'
+    notify: Reiniciar httpd
