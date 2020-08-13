@@ -4,10 +4,6 @@
   become: yes
   become_method: sudo
   vars:
-    packages:
-      - php
-      - mariadb-server
-      - mariadb
     sitio: ejemplo
     server: www.ejemplo.com.uy
     hostmaster: admin@ejemplo.com.uy
