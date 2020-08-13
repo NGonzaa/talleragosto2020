@@ -14,7 +14,7 @@
   - role: apache-debian
     when: ansible_facts['os_family'] == "Debian"
 
-  - name: Crear configuracion de virtualhost.
+  - name: Crear configuracion de balanceo de cargas.
     template:
       src: templates/{{ sitio }}.j2
       dest: /etc/httpd/vhost.d/{{ sitio }}.conf
