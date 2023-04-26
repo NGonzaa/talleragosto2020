@@ -16,3 +16,5 @@ Este repositorio contiene todos los archivos necesarios para el funcionamiento d
 - Configura reglas de firewall necesarias.
 - Crea configuración de balanceo de cargas, y de ser cambiada la configuración, reinicia el servicio.
 - En distribuciones Red Hat, crea un directorio de configuración de virtual hosts y lo agrega a la configuración del servicio httpd.
+
+¡Aprobado!
